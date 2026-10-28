@@ -1,0 +1,12 @@
+# 忽略 Python 產生的暫存檔
+__pycache__/
+*.pyc
+
+# 忽略系統產生的日誌與資料夾
+/data/
+/exports/
+/log_images/
+/videos/
+*.csv
+*.xlsx
+*.webm

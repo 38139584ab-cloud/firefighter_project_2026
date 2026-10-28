@@ -1,0 +1,7 @@
+opencv-python
+gradio
+torch
+torchvision
+ultralytics
+pygame
+openpyxl
