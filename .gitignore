@@ -10,3 +10,11 @@ __pycache__/
 *.csv
 *.xlsx
 *.webm
+
+# 內嵌 Syncthing：執行檔與設定/私鑰，絕對不能進版本庫
+/syncthing/
+/syncthing_home/
+
+# 每台電腦各自的同意狀態，不可共用
+/config.json
+*.tmp
