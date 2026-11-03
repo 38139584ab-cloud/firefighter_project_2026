@@ -618,4 +618,4 @@ with gr.Blocks(css=css) as demo:
         ],
     )
 
-demo.launch(allowed_paths=["voice", "data", "log_images"])
+demo.launch(allowed_paths=["voice", "data", "log_images"], inbrowser=True)  # 伺服器真的就緒才自動開瀏覽器

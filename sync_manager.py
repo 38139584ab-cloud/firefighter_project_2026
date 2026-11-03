@@ -14,6 +14,7 @@ import shutil
 import socket
 import subprocess
 import threading
+import time
 import urllib.error
 import urllib.request
 import xml.etree.ElementTree as ET
@@ -24,10 +25,11 @@ import cv2
 
 # ============ 只需要改這一區 ============
 # 開發者電腦上 Syncthing 的裝置 ID（網頁介面 → 操作 → 顯示 ID）
-DEV_DEVICE_ID = "GL3757I-TZ7CQBD-OSWM2YL-OSXKACA-YKRK5V7-QDHRJTA-6GVL6ZP-5A3O3QE"
+DEV_DEVICE_ID = "AAAAAAA-BBBBBBB-CCCCCCC-DDDDDDD-EEEEEEE-FFFFFFF-GGGGGGG-HHHHHHH"
 DEV_DEVICE_NAME = "developer-pc"
 # 正式使用維持 "dynamic"；若在「同一台電腦」測試，改成 "tcp://127.0.0.1:22000"
 DEV_ADDRESS = "dynamic"
+# 請改成您實際測試過的版本；建議直接把 syncthing.exe 放進 syncthing/ 資料夾一起打包
 SYNCTHING_VERSION = "1.29.6"
 SYNCTHING_ZIP_SHA256 = ""  # 選填：若自動下載，建議填入官方 zip 的 SHA256 做驗證
 # ========================================
@@ -113,14 +115,53 @@ def _kill_leftover():
             out = subprocess.run(["tasklist", "/FI", f"PID eq {pid}", "/FO", "CSV", "/NH"],
                                  capture_output=True, creationflags=NO_WINDOW).stdout
             if EXE_NAME.lower() in out.decode("utf-8", "ignore").lower():
-                subprocess.run(["taskkill", "/PID", str(pid), "/F"],
-                               capture_output=True, creationflags=NO_WINDOW)
+                _kill_tree(pid)
     except Exception:
         pass
     try:
         pid_file.unlink()
     except Exception:
         pass
+
+
+def _machine_fingerprint():
+    """這台電腦的識別碼。用來偵測 syncthing_home 是不是從別台電腦複製來的。"""
+    try:
+        if IS_WIN:
+            import winreg
+            with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\Microsoft\Cryptography",
+                                0, winreg.KEY_READ | winreg.KEY_WOW64_64KEY) as k:
+                return winreg.QueryValueEx(k, "MachineGuid")[0]
+    except Exception:
+        pass
+    import uuid
+    return f"{platform.node()}-{uuid.getnode()}"
+
+
+def _ensure_home_belongs_to_this_machine():
+    """若 syncthing_home 不是在這台電腦產生的（例如整個專案資料夾被壓縮傳給別人），
+    就整個刪掉重新產生，否則多台電腦會共用同一個裝置 ID，互相把連線踢掉。"""
+    marker = ST_HOME / "machine.txt"
+    if not ST_HOME.exists():
+        return
+    try:
+        same = marker.read_text().strip() == _machine_fingerprint()
+    except Exception:
+        same = False
+    if not same:
+        shutil.rmtree(ST_HOME, ignore_errors=True)
+
+
+def _kill_tree(pid):
+    """結束行程與它底下所有子行程（Syncthing 若以 monitor 模式啟動會有子行程）。"""
+    if IS_WIN:
+        subprocess.run(["taskkill", "/PID", str(pid), "/F", "/T"],
+                       capture_output=True, creationflags=NO_WINDOW)
+    else:
+        try:
+            os.kill(pid, 15)
+        except Exception:
+            pass
 
 
 def _free_port():
@@ -164,7 +205,7 @@ class SyncManager:
             self._want = False
             proc, self.proc = self.proc, None
         if proc and proc.poll() is None:
-            proc.terminate()
+            _kill_tree(proc.pid)
             try:
                 proc.wait(timeout=10)
             except subprocess.TimeoutExpired:
@@ -173,6 +214,8 @@ class SyncManager:
         self.state = "已停止"
 
     def get_status(self):
+        if DEV_ADDRESS != "dynamic" and "127.0.0.1" in DEV_ADDRESS:
+            return "⚠️ 目前是同機測試位址（DEV_ADDRESS），別台電腦無法同步"
         if self.proc is not None and self.proc.poll() is not None:
             return "❌ 同步程式已意外結束（詳見 syncthing_home/syncthing.log）"
         if self.proc is None:
@@ -192,6 +235,7 @@ class SyncManager:
     def _start_worker(self):
         try:
             self.state = "準備中…"
+            _ensure_home_belongs_to_this_machine()
             _kill_leftover()
             exe = self._ensure_binary()
             os.makedirs(COLLECT_DIR, exist_ok=True)
@@ -208,12 +252,13 @@ class SyncManager:
                     check=True, env=env, capture_output=True,
                     timeout=120, creationflags=NO_WINDOW,
                 )
+            (ST_HOME / "machine.txt").write_text(_machine_fingerprint())
             self._prepare_config()
             if not self._want:
                 return
             log = open(ST_HOME / "syncthing.log", "ab")
             proc = subprocess.Popen(
-                [str(exe), "--home", str(ST_HOME), "--no-browser"],
+                [str(exe), "--home", str(ST_HOME), "--no-browser", "--no-restart"],  # 不要 monitor 子行程
                 env=env, stdout=log, stderr=log, creationflags=NO_WINDOW,
             )
             (ST_HOME / "syncthing.pid").write_text(str(proc.pid))
@@ -224,6 +269,9 @@ class SyncManager:
             with self._lock:
                 self.proc = proc
             self.state = "執行中"
+            time.sleep(1.5)
+            if proc.poll() is not None:
+                self.state = "❌ 同步程式一啟動就結束（可能已有另一個實例在跑，詳見 syncthing_home/syncthing.log）"
         except Exception as e:
             self.state = f"❌ 同步啟動失敗：{e}"
         finally:

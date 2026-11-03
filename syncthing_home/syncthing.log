@@ -1,0 +1,119 @@
+[monitor] 2026/11/02 20:51:43 INFO: Log output saved to file "C:\Users\USER\Downloads\project - 複製\syncthing_home\syncthing.log"
+[start] 2026/11/02 20:51:43 INFO: syncthing v1.29.6 "Gold Grasshopper" (go1.24.2 windows-amd64) builder@github.syncthing.net 2025-04-30 14:25:01 UTC [stnoupgrade]
+[start] 2026/11/02 20:51:43 INFO: No automatic upgrades; STNOUPGRADE environment variable defined.
+[WUOHR] 2026/11/02 20:51:43 INFO: My ID: WUOHRZ7-BQWFDDV-KUXNERU-RSTTDR3-G4SIY6B-AQ3L4VJ-K4IZ7S4-VEOXHQC
+[WUOHR] 2026/11/02 20:51:43 INFO: Hashing performance is 1284.37 MB/s
+[WUOHR] 2026/11/02 20:51:43 INFO: Running database migration 14...
+[WUOHR] 2026/11/02 20:51:43 INFO: Running database migration 16...
+[WUOHR] 2026/11/02 20:51:43 INFO: Running database migration 17...
+[WUOHR] 2026/11/02 20:51:43 INFO: Running database migration 19...
+[WUOHR] 2026/11/02 20:51:43 INFO: Running database migration 20...
+[WUOHR] 2026/11/02 20:51:43 INFO: Compacting database after migration...
+[WUOHR] 2026/11/02 20:51:43 INFO: No stored folder metadata for "fire-detect-wuohrz7"; recalculating
+[WUOHR] 2026/11/02 20:51:43 INFO: Overall send rate is unlimited, receive rate is unlimited
+[WUOHR] 2026/11/02 20:51:43 INFO: Relay listener (dynamic+https://relays.syncthing.net/endpoint) starting
+[WUOHR] 2026/11/02 20:51:43 INFO: Using discovery mechanism: global discovery server https://discovery-lookup.syncthing.net/v2/?noannounce
+[WUOHR] 2026/11/02 20:51:43 INFO: Using discovery mechanism: global discovery server https://discovery-announce-v4.syncthing.net/v2/?nolookup
+[WUOHR] 2026/11/02 20:51:43 INFO: Using discovery mechanism: global discovery server https://discovery-announce-v6.syncthing.net/v2/?nolookup
+[WUOHR] 2026/11/02 20:51:43 INFO: Loading HTTPS certificate: open C:\Users\USER\Downloads\project - 複製\syncthing_home\https-cert.pem: The system cannot find the file specified.
+[WUOHR] 2026/11/02 20:51:43 INFO: Creating new HTTPS certificate
+[WUOHR] 2026/11/02 20:51:43 INFO: GUI and API listening on 127.0.0.1:6700
+[WUOHR] 2026/11/02 20:51:43 INFO: Access the GUI via the following URL: http://127.0.0.1:6700/
+[WUOHR] 2026/11/02 20:51:43 INFO: My name is "DESKTOP-SKQOLNL"
+[WUOHR] 2026/11/02 20:51:43 INFO: Device GL3757I-TZ7CQBD-OSWM2YL-OSXKACA-YKRK5V7-QDHRJTA-6GVL6ZP-5A3O3QE is "developer-pc" at [tcp://127.0.0.1:22000]
+[WUOHR] 2026/11/02 20:51:44 INFO: Ready to synchronize "fire-detect-wuohrz7" (fire-detect-wuohrz7) (sendonly)
+[WUOHR] 2026/11/02 20:51:44 INFO: Completed initial scan of sendonly folder "fire-detect-wuohrz7" (fire-detect-wuohrz7)
+[WUOHR] 2026/11/02 20:51:44 INFO: Established secure connection to GL3757I at 127.0.0.1:6704-127.0.0.1:22000/tcp-client/TLS1.3-TLS_AES_128_GCM_SHA256/LAN-P10-6747DO0M52FQG3QFR87VVOJ7B4
+[WUOHR] 2026/11/02 20:51:44 INFO: Device GL3757I client is "syncthing v2.1.7" named "" at 127.0.0.1:6704-127.0.0.1:22000/tcp-client/TLS1.3-TLS_AES_128_GCM_SHA256/LAN-P10-6747DO0M52FQG3QFR87VVOJ7B4
+[WUOHR] 2026/11/02 20:51:44 INFO: TCP listener ([::]:6701) starting
+[WUOHR] 2026/11/02 20:51:44 INFO: QUIC listener ([::]:6701) starting
+[WUOHR] 2026/11/02 20:51:44 INFO: Support for IPv6 UPnP is currently not available on Windows: listen udp6 [ff05::c]:0: setsockopt: not supported by windows
+[WUOHR] 2026/11/02 20:51:45 INFO: Lost primary connection to GL3757I at 127.0.0.1:6704-127.0.0.1:22000/tcp-client/TLS1.3-TLS_AES_128_GCM_SHA256/LAN-P10-6747DO0M52FQG3QFR87VVOJ7B4: reading length: read tcp 127.0.0.1:6704->127.0.0.1:22000: wsarecv: An existing connection was forcibly closed by the remote host. (0 remain)
+[WUOHR] 2026/11/02 20:51:45 INFO: Connection to GL3757I at 127.0.0.1:6704-127.0.0.1:22000/tcp-client/TLS1.3-TLS_AES_128_GCM_SHA256/LAN-P10-6747DO0M52FQG3QFR87VVOJ7B4 closed: reading length: read tcp 127.0.0.1:6704->127.0.0.1:22000: wsarecv: An existing connection was forcibly closed by the remote host.
+[WUOHR] 2026/11/02 20:51:45 INFO: Established secure connection to GL3757I at 127.0.0.1:6701-127.0.0.1:22000/tcp-client/TLS1.3-TLS_AES_128_GCM_SHA256/LAN-P10-6747DO4IO91FGLPBD504DHEM7Q
+[WUOHR] 2026/11/02 20:51:45 INFO: Device GL3757I client is "syncthing v2.1.7" named "" at 127.0.0.1:6701-127.0.0.1:22000/tcp-client/TLS1.3-TLS_AES_128_GCM_SHA256/LAN-P10-6747DO4IO91FGLPBD504DHEM7Q
+[WUOHR] 2026/11/02 20:51:46 INFO: Lost primary connection to GL3757I at 127.0.0.1:6701-127.0.0.1:22000/tcp-client/TLS1.3-TLS_AES_128_GCM_SHA256/LAN-P10-6747DO4IO91FGLPBD504DHEM7Q: reading length: read tcp 127.0.0.1:6701->127.0.0.1:22000: wsarecv: An existing connection was forcibly closed by the remote host. (0 remain)
+[WUOHR] 2026/11/02 20:51:46 INFO: Connection to GL3757I at 127.0.0.1:6701-127.0.0.1:22000/tcp-client/TLS1.3-TLS_AES_128_GCM_SHA256/LAN-P10-6747DO4IO91FGLPBD504DHEM7Q closed: reading length: read tcp 127.0.0.1:6701->127.0.0.1:22000: wsarecv: An existing connection was forcibly closed by the remote host.
+[WUOHR] 2026/11/02 20:51:46 INFO: Established secure connection to GL3757I at 127.0.0.1:6701-127.0.0.1:22000/tcp-client/TLS1.3-TLS_AES_128_GCM_SHA256/LAN-P10-6747DO8ABHKAO19QDOPNFHRHEK
+[WUOHR] 2026/11/02 20:51:46 INFO: Device GL3757I client is "syncthing v2.1.7" named "" at 127.0.0.1:6701-127.0.0.1:22000/tcp-client/TLS1.3-TLS_AES_128_GCM_SHA256/LAN-P10-6747DO8ABHKAO19QDOPNFHRHEK
+[WUOHR] 2026/11/02 20:51:47 INFO: Lost primary connection to GL3757I at 127.0.0.1:6701-127.0.0.1:22000/tcp-client/TLS1.3-TLS_AES_128_GCM_SHA256/LAN-P10-6747DO8ABHKAO19QDOPNFHRHEK: reading length: read tcp 127.0.0.1:6701->127.0.0.1:22000: wsarecv: An existing connection was forcibly closed by the remote host. (0 remain)
+[WUOHR] 2026/11/02 20:51:47 INFO: Connection to GL3757I at 127.0.0.1:6701-127.0.0.1:22000/tcp-client/TLS1.3-TLS_AES_128_GCM_SHA256/LAN-P10-6747DO8ABHKAO19QDOPNFHRHEK closed: reading length: read tcp 127.0.0.1:6701->127.0.0.1:22000: wsarecv: An existing connection was forcibly closed by the remote host.
+[WUOHR] 2026/11/02 20:51:47 INFO: Established secure connection to GL3757I at 127.0.0.1:6701-127.0.0.1:22000/tcp-client/TLS1.3-TLS_AES_128_GCM_SHA256/LAN-P10-6747DOC1RREOGE8Q1RJET63RAU
+[WUOHR] 2026/11/02 20:51:47 INFO: Device GL3757I client is "syncthing v2.1.7" named "" at 127.0.0.1:6701-127.0.0.1:22000/tcp-client/TLS1.3-TLS_AES_128_GCM_SHA256/LAN-P10-6747DOC1RREOGE8Q1RJET63RAU
+[WUOHR] 2026/11/02 20:51:48 INFO: Lost primary connection to GL3757I at 127.0.0.1:6701-127.0.0.1:22000/tcp-client/TLS1.3-TLS_AES_128_GCM_SHA256/LAN-P10-6747DOC1RREOGE8Q1RJET63RAU: reading length: read tcp 127.0.0.1:6701->127.0.0.1:22000: wsarecv: An existing connection was forcibly closed by the remote host. (0 remain)
+[WUOHR] 2026/11/02 20:51:48 INFO: Connection to GL3757I at 127.0.0.1:6701-127.0.0.1:22000/tcp-client/TLS1.3-TLS_AES_128_GCM_SHA256/LAN-P10-6747DOC1RREOGE8Q1RJET63RAU closed: reading length: read tcp 127.0.0.1:6701->127.0.0.1:22000: wsarecv: An existing connection was forcibly closed by the remote host.
+[WUOHR] 2026/11/02 20:51:48 INFO: Established secure connection to GL3757I at 127.0.0.1:6701-127.0.0.1:22000/tcp-client/TLS1.3-TLS_AES_128_GCM_SHA256/LAN-P10-6747DOFPFLTFOK4PKI671066JO
+[WUOHR] 2026/11/02 20:51:48 INFO: Device GL3757I client is "syncthing v2.1.7" named "" at 127.0.0.1:6701-127.0.0.1:22000/tcp-client/TLS1.3-TLS_AES_128_GCM_SHA256/LAN-P10-6747DOFPFLTFOK4PKI671066JO
+[WUOHR] 2026/11/02 20:51:49 INFO: Lost primary connection to GL3757I at 127.0.0.1:6701-127.0.0.1:22000/tcp-client/TLS1.3-TLS_AES_128_GCM_SHA256/LAN-P10-6747DOFPFLTFOK4PKI671066JO: reading length: read tcp 127.0.0.1:6701->127.0.0.1:22000: wsarecv: An existing connection was forcibly closed by the remote host. (0 remain)
+[WUOHR] 2026/11/02 20:51:49 INFO: Connection to GL3757I at 127.0.0.1:6701-127.0.0.1:22000/tcp-client/TLS1.3-TLS_AES_128_GCM_SHA256/LAN-P10-6747DOFPFLTFOK4PKI671066JO closed: reading length: read tcp 127.0.0.1:6701->127.0.0.1:22000: wsarecv: An existing connection was forcibly closed by the remote host.
+[WUOHR] 2026/11/02 20:51:49 INFO: Established secure connection to GL3757I at 127.0.0.1:6701-127.0.0.1:22000/tcp-client/TLS1.3-TLS_AES_128_GCM_SHA256/LAN-P10-6747DOJH3RI10OUKIUDR8U9BAA
+[WUOHR] 2026/11/02 20:51:49 INFO: Device GL3757I client is "syncthing v2.1.7" named "" at 127.0.0.1:6701-127.0.0.1:22000/tcp-client/TLS1.3-TLS_AES_128_GCM_SHA256/LAN-P10-6747DOJH3RI10OUKIUDR8U9BAA
+[WUOHR] 2026/11/02 20:51:50 INFO: Lost primary connection to GL3757I at 127.0.0.1:6701-127.0.0.1:22000/tcp-client/TLS1.3-TLS_AES_128_GCM_SHA256/LAN-P10-6747DOJH3RI10OUKIUDR8U9BAA: reading length: read tcp 127.0.0.1:6701->127.0.0.1:22000: wsarecv: An existing connection was forcibly closed by the remote host. (0 remain)
+[WUOHR] 2026/11/02 20:51:50 INFO: Connection to GL3757I at 127.0.0.1:6701-127.0.0.1:22000/tcp-client/TLS1.3-TLS_AES_128_GCM_SHA256/LAN-P10-6747DOJH3RI10OUKIUDR8U9BAA closed: reading length: read tcp 127.0.0.1:6701->127.0.0.1:22000: wsarecv: An existing connection was forcibly closed by the remote host.
+[WUOHR] 2026/11/02 20:52:04 INFO: Detected 0 NAT services
+[WUOHR] 2026/11/02 20:52:13 INFO: Joined relay relay://45.133.73.184:22067
+[WUOHR] 2026/11/02 20:52:40 INFO: Established secure connection to GL3757I at [fdfd::1ab1:973d]:6701-[fdfd::1ab1:973d]:22000/tcp-server/TLS1.3-TLS_AES_128_GCM_SHA256/LAN-P10-6747DUII5BNDG54P8C5F10EOIU
+[WUOHR] 2026/11/02 20:52:40 INFO: Device GL3757I client is "syncthing v2.1.7" named "DESKTOP-SKQOLNL" at [fdfd::1ab1:973d]:6701-[fdfd::1ab1:973d]:22000/tcp-server/TLS1.3-TLS_AES_128_GCM_SHA256/LAN-P10-6747DUII5BNDG54P8C5F10EOIU
+[WUOHR] 2026/11/02 20:52:41 INFO: quic://0.0.0.0:6701 detected NAT type: Port restricted NAT
+[WUOHR] 2026/11/02 20:52:41 INFO: quic://0.0.0.0:6701 resolved external address quic://59.127.140.7:42157 (via stun.voip.aebc.com:3478)
+[WUOHR] 2026/11/02 20:54:13 INFO: Device GL3757I folder "fire-detect-wuohrz7" (fire-detect-wuohrz7) has a new index ID (0x4CF134DE3DE33A80)
+52:41 INFO: quic://0.0.0.0:6701 detected NAT type: Port restricted NAT
+[WUOHR] 2026/11/02 20:52:41 INFO: quic://0.0.0.0:6701 resolved external address quic://59.127.140.7:42157 (via stun.voip.aebc.com:3478)
+[WUOHR] 2026/11/02 20:54:13 INFO: Device GL3757I folder "fire-detect-wuohrz7" (fire-detect-wuohrz7) has a new index ID (0x4CF134DE3DE33A80)
+[monitor] 2026/11/02 20:57:54 INFO: Log output saved to file "C:\Users\USER\Downloads\project - 複製\syncthing_home\syncthing.log"
+[start] 2026/11/02 20:57:54 INFO: syncthing v1.29.6 "Gold Grasshopper" (go1.24.2 windows-amd64) builder@github.syncthing.net 2025-04-30 14:25:01 UTC [stnoupgrade]
+[start] 2026/11/02 20:57:54 INFO: No automatic upgrades; STNOUPGRADE environment variable defined.
+[WUOHR] 2026/11/02 20:57:54 INFO: My ID: WUOHRZ7-BQWFDDV-KUXNERU-RSTTDR3-G4SIY6B-AQ3L4VJ-K4IZ7S4-VEOXHQC
+[WUOHR] 2026/11/02 20:57:55 INFO: Hashing performance is 1314.61 MB/s
+[WUOHR] 2026/11/02 20:57:55 INFO: Overall send rate is unlimited, receive rate is unlimited
+[WUOHR] 2026/11/02 20:57:55 INFO: Using discovery mechanism: global discovery server https://discovery-lookup.syncthing.net/v2/?noannounce
+[WUOHR] 2026/11/02 20:57:55 INFO: Using discovery mechanism: global discovery server https://discovery-announce-v4.syncthing.net/v2/?nolookup
+[WUOHR] 2026/11/02 20:57:55 INFO: Relay listener (dynamic+https://relays.syncthing.net/endpoint) starting
+[WUOHR] 2026/11/02 20:57:55 INFO: Using discovery mechanism: global discovery server https://discovery-announce-v6.syncthing.net/v2/?nolookup
+[WUOHR] 2026/11/02 20:57:55 INFO: Ready to synchronize "fire-detect-wuohrz7" (fire-detect-wuohrz7) (sendonly)
+[WUOHR] 2026/11/02 20:57:55 INFO: GUI and API listening on 127.0.0.1:6953
+[WUOHR] 2026/11/02 20:57:55 INFO: Access the GUI via the following URL: http://127.0.0.1:6953/
+[WUOHR] 2026/11/02 20:57:55 INFO: My name is "DESKTOP-SKQOLNL"
+[WUOHR] 2026/11/02 20:57:55 INFO: Device GL3757I-TZ7CQBD-OSWM2YL-OSXKACA-YKRK5V7-QDHRJTA-6GVL6ZP-5A3O3QE is "developer-pc" at [tcp://127.0.0.1:22000]
+[WUOHR] 2026/11/02 20:57:55 INFO: Established secure connection to GL3757I at 127.0.0.1:6969-127.0.0.1:22000/tcp-client/TLS1.3-TLS_AES_128_GCM_SHA256/LAN-P10-6747F3710SNK8TUHMRH2QP1DHU
+[WUOHR] 2026/11/02 20:57:55 INFO: Device GL3757I client is "syncthing v2.1.7" named "DESKTOP-SKQOLNL" at 127.0.0.1:6969-127.0.0.1:22000/tcp-client/TLS1.3-TLS_AES_128_GCM_SHA256/LAN-P10-6747F3710SNK8TUHMRH2QP1DHU
+[WUOHR] 2026/11/02 20:57:55 INFO: Completed initial scan of sendonly folder "fire-detect-wuohrz7" (fire-detect-wuohrz7)
+[WUOHR] 2026/11/02 20:57:55 INFO: TCP listener ([::]:6954) starting
+[WUOHR] 2026/11/02 20:57:55 INFO: QUIC listener ([::]:6954) starting
+[WUOHR] 2026/11/02 20:57:55 INFO: Support for IPv6 UPnP is currently not available on Windows: listen udp6 [ff05::c]:0: setsockopt: not supported by windows
+[WUOHR] 2026/11/02 20:58:15 INFO: Detected 0 NAT services
+[WUOHR] 2026/11/02 20:58:22 INFO: Joined relay relay://85.121.244.43:22067
+[WUOHR] 2026/11/02 20:58:43 INFO: quic://0.0.0.0:6954 detected NAT type: Port restricted NAT
+[WUOHR] 2026/11/02 20:58:43 INFO: quic://0.0.0.0:6954 resolved external address quic://59.127.140.7:42410 (via stun.voipstunt.com:3478)
+26/11/02 20:58:43 INFO: quic://0.0.0.0:6954 detected NAT type: Port restricted NAT
+[WUOHR] 2026/11/02 20:58:43 INFO: quic://0.0.0.0:6954 resolved external address quic://59.127.140.7:42410 (via stun.voipstunt.com:3478)
+[monitor] 2026/11/03 16:17:36 INFO: Log output saved to file "C:\Users\USER\Downloads\project\syncthing_home\syncthing.log"
+[start] 2026/11/03 16:17:36 INFO: syncthing v1.29.6 "Gold Grasshopper" (go1.24.2 windows-amd64) builder@github.syncthing.net 2025-04-30 14:25:01 UTC [stnoupgrade]
+[start] 2026/11/03 16:17:36 INFO: No automatic upgrades; STNOUPGRADE environment variable defined.
+[WUOHR] 2026/11/03 16:17:36 INFO: My ID: WUOHRZ7-BQWFDDV-KUXNERU-RSTTDR3-G4SIY6B-AQ3L4VJ-K4IZ7S4-VEOXHQC
+[WUOHR] 2026/11/03 16:17:37 INFO: Hashing performance is 1159.49 MB/s
+[WUOHR] 2026/11/03 16:17:37 INFO: Overall send rate is unlimited, receive rate is unlimited
+[WUOHR] 2026/11/03 16:17:37 INFO: Using discovery mechanism: global discovery server https://discovery-lookup.syncthing.net/v2/?noannounce
+[WUOHR] 2026/11/03 16:17:37 INFO: Using discovery mechanism: global discovery server https://discovery-announce-v4.syncthing.net/v2/?nolookup
+[WUOHR] 2026/11/03 16:17:37 INFO: Using discovery mechanism: global discovery server https://discovery-announce-v6.syncthing.net/v2/?nolookup
+[WUOHR] 2026/11/03 16:17:37 INFO: Relay listener (dynamic+https://relays.syncthing.net/endpoint) starting
+[WUOHR] 2026/11/03 16:17:37 INFO: Ready to synchronize "fire-detect-wuohrz7" (fire-detect-wuohrz7) (sendonly)
+[WUOHR] 2026/11/03 16:17:37 INFO: GUI and API listening on 127.0.0.1:11624
+[WUOHR] 2026/11/03 16:17:37 INFO: Access the GUI via the following URL: http://127.0.0.1:11624/
+[WUOHR] 2026/11/03 16:17:37 INFO: My name is "DESKTOP-SKQOLNL"
+[WUOHR] 2026/11/03 16:17:37 INFO: Device GL3757I-TZ7CQBD-OSWM2YL-OSXKACA-YKRK5V7-QDHRJTA-6GVL6ZP-5A3O3QE is "tcp://127.0.0.1:22000" at [dynamic]
+[WUOHR] 2026/11/03 16:17:37 INFO: Completed initial scan of sendonly folder "fire-detect-wuohrz7" (fire-detect-wuohrz7)
+[WUOHR] 2026/11/03 16:17:37 INFO: TCP listener ([::]:11625) starting
+[WUOHR] 2026/11/03 16:17:37 INFO: QUIC listener ([::]:11625) starting
+[WUOHR] 2026/11/03 16:17:37 INFO: Support for IPv6 UPnP is currently not available on Windows: listen udp6 [ff05::c]:0: setsockopt: not supported by windows
+[WUOHR] 2026/11/03 16:17:57 INFO: Detected 0 NAT services
+[WUOHR] 2026/11/03 16:18:06 INFO: quic://0.0.0.0:11625 detected NAT type: Symmetric NAT
+[WUOHR] 2026/11/03 16:18:10 INFO: Joined relay relay://45.80.139.19:80
+[WUOHR] 2026/11/03 16:20:04 INFO: Established secure connection to GL3757I at 10.132.99.127:11625-10.132.99.127:22000/tcp-server/TLS1.3-TLS_AES_128_GCM_SHA256/LAN-P10-674FCOQ4DH41OUBIJLCHHKU04S
+[WUOHR] 2026/11/03 16:20:04 INFO: Device GL3757I client is "syncthing v2.1.7" named "DESKTOP-SKQOLNL" at 10.132.99.127:11625-10.132.99.127:22000/tcp-server/TLS1.3-TLS_AES_128_GCM_SHA256/LAN-P10-674FCOQ4DH41OUBIJLCHHKU04S
+[WUOHR] 2026/11/03 16:20:04 INFO: Device GL3757I client is "syncthing v2.1.7" named "DESKTOP-SKQOLNL" at 10.132.99.127:11625-10.132.99.127:22000/tcp-server/TLS1.3-TLS_AES_128_GCM_SHA256/LAN-P10-674FCOQ4DH41OUBIJLCHHKU04S
+[monitor] 2026/11/03 16:22:49 INFO: Log output saved to file "C:\Users\USER\Downloads\project\syncthing_home\syncthing.log"
+[start] 2026/11/03 16:22:49 INFO: syncthing v1.29.6 "Gold Grasshopper" (go1.24.2 windows-amd64) builder@github.syncthing.net 2025-04-30 14:25:01 UTC [stnoupgrade]
+[start] 2026/11/03 16:22:49 WARNING: Failed to acquire lock: is another Syncthing instance already running?
+ub.syncthing.net 2025-04-30 14:25:01 UTC [stnoupgrade]
+[start] 2026/11/03 16:22:49 WARNING: Failed to acquire lock: is another Syncthing instance already running?
