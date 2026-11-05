@@ -18,3 +18,6 @@ __pycache__/
 # 每台電腦各自的同意狀態，不可共用
 /config.json
 *.tmp
+
+# Syncthing 收到的模型（由 Syncthing 管理，不走 git）
+/models_sync/

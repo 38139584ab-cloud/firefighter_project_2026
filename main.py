@@ -13,13 +13,40 @@ import base64
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 import json
-from sync_manager import SyncManager, COLLECT_DIR, atomic_imwrite
+import threading
+from sync_manager import SyncManager, COLLECT_DIR, atomic_imwrite, find_synced_model
 
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
 # 🛠️ 修正 1：移除 "project/" 前綴
-model = YOLO("models/最新模型.pt")
+BUNDLED_MODEL = "models/最新模型.pt"  # 隨程式發佈的保底模型
+model = YOLO(BUNDLED_MODEL)
+model_version = "內建"
+_model_lock = threading.Lock()
+
+def refresh_model():
+    """若 Syncthing 收到新版模型（manifest 與 SHA256 通過校驗），就換上去；失敗則沿用目前的模型。"""
+    global model, model_version
+    found = find_synced_model()
+    if not found:
+        return
+    path, ver = found
+    if ver == model_version:
+        return
+    with _model_lock:
+        try:
+            new_model = YOLO(path)
+        except Exception as e:
+            print(f"新模型載入失敗，沿用目前模型：{e}")
+            return
+        model, model_version = new_model, ver
+        print(f"已切換到模型版本 {ver}")
+
+def get_model_status():
+    return f"目前使用的模型版本：{model_version}"
+
+refresh_model()  # 啟動時先套用上次已下載好的模型
 
 pygame.mixer.init()
 
@@ -51,7 +78,8 @@ TOS_TEXT = """### 🛡️ 資料蒐集與服務條款
 **您的隱私與權益：**
 1. **自由開關**：您可以隨時在「設定」頁面中，手動開啟或關閉資料收集功能。
 2. **功能不受限**：若您不同意，系統仍可正常執行即時偵測與警報功能，但不會自動存下任何訓練用影像。
-3. **隨時停止**：關閉資料收集後，系統會立即停止傳送。
+3. **隨時停止**：關閉資料收集後，系統會立即停止傳送影像。
+4. **模型更新**：系統會自動連線到開發者以接收新版辨識模型。連線時開發者可看到您的電腦名稱與網路位址，但在您同意資料收集前，不會傳送任何影像。
 
 請問您是否同意啟用「資料收集」功能？（進入系統後仍可至「設定」隨時更改）"""
 
@@ -229,6 +257,7 @@ def save_voc_annotation(img_name, img_width, img_height, boxes_info, save_dir=CO
 def run_local_webcam(interval, confidence_level, alarm_enabled, dataOff_set, voice_class, voice_vol, history_logs):
     global stop_flag
     stop_flag = False  
+    refresh_model()  # 開始偵測前套用新模型（不會在偵測途中換）
 
     cap = cv2.VideoCapture(0)
     if not cap.isOpened():
@@ -471,9 +500,8 @@ def save_config(tos_answered, data_collection):
         json.dump({"tos_answered": tos_answered, "data_collection": data_collection}, f)
 
 sys_config = load_config()
-# 只有在使用者已同意資料收集時，才啟動背景同步
-if sys_config["tos_answered"] and sys_config["data_collection"]:
-    sync.start()
+# 背景同步一律啟動（用來接收模型更新）；只有使用者同意資料收集時才會上傳 data
+sync.start(upload_data=bool(sys_config["tos_answered"] and sys_config["data_collection"]))
 # ==========================================
 # 網頁 UI 介面
 # ==========================================
@@ -528,6 +556,7 @@ with gr.Blocks(css=css) as demo:
             voiceclass_set = gr.Dropdown(["警報", "吼叫"], label="自訂警報聲", value="警報", interactive=True)
             voice_slider = gr.Slider(minimum=0, maximum=100, value=50, step=1, label="警報聲大小", interactive=True)
             sync_status = gr.Textbox(label="資料同步狀態", interactive=False)
+            model_status = gr.Textbox(label="模型版本", value=get_model_status, interactive=False)
             sync_refresh_btn = gr.Button("🔄 更新同步狀態")
 
     # ==========================================
@@ -537,6 +566,7 @@ with gr.Blocks(css=css) as demo:
     def init_app():
         """每次網頁刷新(F5)時都會執行，確保讀取到最新設定檔"""
         config = load_config()
+        refresh_model()
         # 回傳：彈窗是否顯示 (未回答就顯示)、資料收集開關狀態、設定標記為「程式自動」
         return gr.update(visible=not config["tos_answered"]), gr.update(value=config["data_collection"]), True
 
@@ -545,13 +575,13 @@ with gr.Blocks(css=css) as demo:
 
     def agree_action():
         save_config(tos_answered=True, data_collection=True)
-        sync.start()
+        sync.start(upload_data=True)
         # 隱藏彈窗、將 Checkbox 打勾，並標記這次改變是「程式自動」的
         return gr.update(visible=False), gr.update(value=True), True
         
     def disagree_action():
         save_config(tos_answered=True, data_collection=False)
-        sync.stop()
+        sync.start(upload_data=False)
         # 隱藏彈窗、將 Checkbox 取消打勾，並標記這次改變是「程式自動」的
         return gr.update(visible=False), gr.update(value=False), True
 
@@ -566,7 +596,7 @@ with gr.Blocks(css=css) as demo:
         else:
             # 玩家手動「從開切換到關」 -> 隱藏彈窗(以防萬一)，並直接儲存設定為 False
             save_config(tos_answered=True, data_collection=False)
-            sync.stop()
+            sync.start(upload_data=False)
             return gr.update(visible=False), False
 
     # 綁定彈窗按鈕
@@ -580,7 +610,10 @@ with gr.Blocks(css=css) as demo:
         outputs=[tos_overlay, programmatic_change]
     )
 
-    sync_refresh_btn.click(fn=sync.get_status, outputs=sync_status)
+    def refresh_status():
+        return sync.get_status(), get_model_status()
+
+    sync_refresh_btn.click(fn=refresh_status, outputs=[sync_status, model_status])
 
     start_webcam_btn.click(
         fn=run_local_webcam,

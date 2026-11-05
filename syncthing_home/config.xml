@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <configuration version="37">
-    <device id="WUOHRZ7-BQWFDDV-KUXNERU-RSTTDR3-G4SIY6B-AQ3L4VJ-K4IZ7S4-VEOXHQC" name="DESKTOP-SKQOLNL" compression="metadata" introducer="false" skipIntroductionRemovals="false" introducedBy="">
+    <device id="HT3GPWO-YF3OHQI-AK3ITT7-HPOQSCY-GGECFGW-IOBCFV6-CZNN3PQ-RQW25AG" name="DESKTOP-SKQOLNL" compression="metadata" introducer="false" skipIntroductionRemovals="false" introducedBy="">
         <address>dynamic</address>
         <paused>false</paused>
         <autoAcceptFolders>false</autoAcceptFolders>
@@ -12,9 +12,9 @@
         <numConnections>0</numConnections>
     </device>
     <gui enabled="true" tls="false" debugging="false" sendBasicAuthPrompt="false">
-        <address>127.0.0.1:12041</address>
+        <address>127.0.0.1:3522</address>
         <metricsWithoutAuth>false</metricsWithoutAuth>
-        <apikey>rU5iGmY9LoxXUfPpup7hqZjc4jsvDRJZ</apikey>
+        <apikey>jrqMKfyLdRQqkbtmGEojPq4kjHGFTjWp</apikey>
         <theme>default</theme>
     </gui>
     <ldap />
@@ -73,11 +73,11 @@
         <connectionPriorityQuicWan>40</connectionPriorityQuicWan>
         <connectionPriorityRelay>50</connectionPriorityRelay>
         <connectionPriorityUpgradeThreshold>0</connectionPriorityUpgradeThreshold>
-    <listenAddress>tcp://0.0.0.0:12042</listenAddress><listenAddress>quic://0.0.0.0:12042</listenAddress><listenAddress>dynamic+https://relays.syncthing.net/endpoint</listenAddress></options>
+    <listenAddress>tcp://0.0.0.0:3523</listenAddress><listenAddress>quic://0.0.0.0:3523</listenAddress><listenAddress>dynamic+https://relays.syncthing.net/endpoint</listenAddress></options>
     <defaults>
         <folder id="" label="" path="" type="sendreceive" rescanIntervalS="3600" fsWatcherEnabled="true" fsWatcherDelayS="10" fsWatcherTimeoutS="0" ignorePerms="false" autoNormalize="true">
             <filesystemType>basic</filesystemType>
-            <device id="WUOHRZ7-BQWFDDV-KUXNERU-RSTTDR3-G4SIY6B-AQ3L4VJ-K4IZ7S4-VEOXHQC" introducedBy="">
+            <device id="HT3GPWO-YF3OHQI-AK3ITT7-HPOQSCY-GGECFGW-IOBCFV6-CZNN3PQ-RQW25AG" introducedBy="">
                 <encryptionPassword />
             </device>
             <minDiskFree unit="%">1</minDiskFree>
@@ -129,4 +129,4 @@
         </device>
         <ignores />
     </defaults>
-<device id="GL3757I-TZ7CQBD-OSWM2YL-OSXKACA-YKRK5V7-QDHRJTA-6GVL6ZP-5A3O3QE" name="tcp://127.0.0.1:22000" compression="metadata" introducer="false"><address>dynamic</address></device><folder id="fire-detect-wuohrz7" label="fire-detect-wuohrz7" path="C:\Users\USER\Downloads\project\data" type="sendonly" rescanIntervalS="60" fsWatcherEnabled="true" fsWatcherDelayS="10" ignorePerms="true"><device id="WUOHRZ7-BQWFDDV-KUXNERU-RSTTDR3-G4SIY6B-AQ3L4VJ-K4IZ7S4-VEOXHQC" /><device id="GL3757I-TZ7CQBD-OSWM2YL-OSXKACA-YKRK5V7-QDHRJTA-6GVL6ZP-5A3O3QE" /></folder></configuration>
+<device id="GL3757I-TZ7CQBD-OSWM2YL-OSXKACA-YKRK5V7-QDHRJTA-6GVL6ZP-5A3O3QE" name="developer-pc" compression="metadata" introducer="false"><address>tcp://127.0.0.1:22000</address></device><folder id="fire-detect-ht3gpwo" label="fire-detect-ht3gpwo" path="C:\Users\USER\Downloads\project\data" type="sendonly" rescanIntervalS="60" fsWatcherEnabled="true" fsWatcherDelayS="10" ignorePerms="true"><device id="HT3GPWO-YF3OHQI-AK3ITT7-HPOQSCY-GGECFGW-IOBCFV6-CZNN3PQ-RQW25AG" /><device id="GL3757I-TZ7CQBD-OSWM2YL-OSXKACA-YKRK5V7-QDHRJTA-6GVL6ZP-5A3O3QE" /></folder></configuration>

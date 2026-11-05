@@ -1,2 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<annotation><folder>data</folder><filename>train_20261103_161859_966.jpg</filename><size><width>640</width><height>480</height><depth>3</depth></size><object><name>No_Helmet</name><pose>Unspecified</pose><truncated>0</truncated><difficult>0</difficult><bndbox><xmin>146</xmin><ymin>53</ymin><xmax>398</xmax><ymax>335</ymax></bndbox></object><object><name>person</name><pose>Unspecified</pose><truncated>0</truncated><difficult>0</difficult><bndbox><xmin>0</xmin><ymin>39</ymin><xmax>560</xmax><ymax>479</ymax></bndbox></object></annotation>

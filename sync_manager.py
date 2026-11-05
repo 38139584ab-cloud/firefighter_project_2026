@@ -25,7 +25,7 @@ import cv2
 
 # ============ 只需要改這一區 ============
 # 開發者電腦上 Syncthing 的裝置 ID（網頁介面 → 操作 → 顯示 ID）
-DEV_DEVICE_ID = "AAAAAAA-BBBBBBB-CCCCCCC-DDDDDDD-EEEEEEE-FFFFFFF-GGGGGGG-HHHHHHH"
+DEV_DEVICE_ID = "GL3757I-TZ7CQBD-OSWM2YL-OSXKACA-YKRK5V7-QDHRJTA-6GVL6ZP-5A3O3QE"
 DEV_DEVICE_NAME = "developer-pc"
 # 正式使用維持 "dynamic"；若在「同一台電腦」測試，改成 "tcp://127.0.0.1:22000"
 DEV_ADDRESS = "dynamic"
@@ -38,6 +38,10 @@ DEV_ID = DEV_DEVICE_ID.strip().upper()
 
 BASE_DIR = Path(__file__).resolve().parent
 COLLECT_DIR = str(BASE_DIR / "data")        # 要同步的資料夾（沿用您原本的 data）
+# 模型發佈：每位使用者一個專屬資料夾（fire-model-<裝置ID前7碼>），
+# 開發端 Send Only → 該使用者 Receive Only；只分享給那一台裝置，使用者之間看不到彼此的模型
+MODEL_FOLDER_PREFIX = "fire-model-"
+MODEL_DIR = str(BASE_DIR / "models_sync")    # 收到的模型放這裡（不要與 git 追蹤的 models/ 混用）
 ST_BIN_DIR = BASE_DIR / "syncthing"          # syncthing 執行檔位置
 ST_HOME = BASE_DIR / "syncthing_home"        # syncthing 設定與金鑰
 IS_WIN = platform.system() == "Windows"
@@ -164,6 +168,31 @@ def _kill_tree(pid):
             pass
 
 
+_hash_cache = {}
+
+
+def find_synced_model():
+    """回傳 (模型路徑, 版本字串)；沒有可用的新模型就回傳 None。
+    只接受 manifest.json 指到的檔案，且 SHA256 必須吻合（擋掉傳到一半或損毀的檔案）。"""
+    try:
+        info = json.loads((Path(MODEL_DIR) / "manifest.json").read_text(encoding="utf-8"))
+        path = Path(MODEL_DIR) / Path(info["file"]).name  # 只取檔名，防止路徑穿越
+        st = path.stat()
+        key = (str(path), st.st_mtime_ns, st.st_size)
+        digest = _hash_cache.get(key)
+        if digest is None:
+            h = hashlib.sha256()
+            with open(path, "rb") as f:
+                for chunk in iter(lambda: f.read(1 << 20), b""):
+                    h.update(chunk)
+            digest = _hash_cache[key] = h.hexdigest()
+        if digest.lower() != str(info["sha256"]).lower():
+            return None
+        return str(path), str(info.get("version", path.stem))
+    except Exception:
+        return None
+
+
 def _free_port():
     with socket.socket() as s:
         s.bind(("127.0.0.1", 0))
@@ -182,23 +211,43 @@ class SyncManager:
         self.proc = None
         self.state = "未啟動"
         self.folder_id = None
+        self.model_folder_id = None
         self.api_key = None
         self.gui_port = None
         self._want = False
         self._busy = False
         self._job = None
+        self._upload_data = False  # 使用者是否同意上傳資料；False 時資料夾暫停、只收模型
         self._lock = threading.Lock()
         atexit.register(self.stop)
 
     # ---------- 對外介面 ----------
-    def start(self):
-        """非阻塞；可重複呼叫。第一次會花幾秒準備（產生金鑰、下載等）。"""
+    def start(self, upload_data=False):
+        """非阻塞；可重複呼叫。Syncthing 啟動後一直在背景接收模型更新；
+        upload_data=True（使用者已同意）才會恢復上傳 data 資料夾，False 則暫停上傳。"""
         with self._lock:
             self._want = True
-            if self._busy or (self.proc and self.proc.poll() is None):
+            self._upload_data = bool(upload_data)
+            if self._busy:
+                return  # 啟動流程結束時會套用最新的 _upload_data
+            if self.proc and self.proc.poll() is None:
+                threading.Thread(target=self._apply_pause_state, daemon=True).start()
                 return
             self._busy = True
         threading.Thread(target=self._start_worker, daemon=True).start()
+
+    def _apply_pause_state(self, wait=False):
+        """不重啟 Syncthing，直接用 API 暫停/恢復 data 資料夾。"""
+        deadline = time.time() + (30 if wait else 0)
+        while True:
+            try:
+                self._api(f"/rest/config/folders/{self.folder_id}", "PATCH",
+                          {"paused": not self._upload_data})
+                return True
+            except Exception:
+                if time.time() >= deadline:
+                    return False
+                time.sleep(1)
 
     def stop(self):
         with self._lock:
@@ -223,7 +272,9 @@ class SyncManager:
         try:
             conns = self._api("/rest/system/connections")["connections"]
             if not conns.get(DEV_ID, {}).get("connected"):
-                return "🟡 尚未連線到開發端（資料先存本機，連線後會自動補傳）"
+                return "🟡 尚未連線到開發端" + ("（資料先存本機，連線後會自動補傳）" if self._upload_data else "")
+            if not self._upload_data:
+                return "🟢 已連線開發端（僅接收模型更新，未上傳任何資料）"
             c = self._api(f"/rest/db/completion?folder={self.folder_id}&device={DEV_ID}")
             return f"🟢 已連線開發端，同步進度 {c.get('completion', 0):.0f}%"
         except urllib.error.HTTPError:
@@ -272,6 +323,8 @@ class SyncManager:
             time.sleep(1.5)
             if proc.poll() is not None:
                 self.state = "❌ 同步程式一啟動就結束（可能已有另一個實例在跑，詳見 syncthing_home/syncthing.log）"
+            else:
+                self._apply_pause_state(wait=True)  # 啟動期間若使用者改了同意狀態，這裡補套用
         except Exception as e:
             self.state = f"❌ 同步啟動失敗：{e}"
         finally:
@@ -313,6 +366,7 @@ class SyncManager:
         my_id = me.get("id")
         # 每位使用者一個獨立資料夾 ID，開發端會各自存成獨立資料夾，不會互相混在一起
         self.folder_id = f"fire-detect-{my_id[:7].lower()}"
+        self.model_folder_id = f"{MODEL_FOLDER_PREFIX}{my_id[:7].lower()}"
 
         for el in root.findall("folder"):
             root.remove(el)
@@ -326,9 +380,18 @@ class SyncManager:
 
         folder = ET.SubElement(root, "folder", id=self.folder_id, label=self.folder_id,
                                path=COLLECT_DIR, type="sendonly", rescanIntervalS="60",
+                               paused="false" if self._upload_data else "true",
                                fsWatcherEnabled="true", fsWatcherDelayS="10", ignorePerms="true")
         ET.SubElement(folder, "device", id=my_id)
         ET.SubElement(folder, "device", id=DEV_ID)
+
+        # 專屬模型資料夾：只接收（Receive Only）；開發端要建立同 ID、Send Only 的資料夾（dev_admin.py 會處理）
+        mfolder = ET.SubElement(root, "folder", id=self.model_folder_id, label=self.model_folder_id,
+                                path=MODEL_DIR, type="receiveonly", rescanIntervalS="3600",
+                                fsWatcherEnabled="true", fsWatcherDelayS="10", ignorePerms="true")
+        ET.SubElement(mfolder, "device", id=my_id)
+        ET.SubElement(mfolder, "device", id=DEV_ID)
+        os.makedirs(os.path.join(MODEL_DIR, ".stfolder"), exist_ok=True)
 
         gui = root.find("gui")
         self.gui_port = _free_port()
@@ -361,10 +424,14 @@ class SyncManager:
             with open(ignore, "w", encoding="utf-8") as f:
                 f.write("*.tmp\n")  # 寫到一半的暫存檔不要同步
 
-    def _api(self, path):
-        req = urllib.request.Request(
-            f"http://127.0.0.1:{self.gui_port}{path}",
-            headers={"X-API-Key": self.api_key},
-        )
+    def _api(self, path, method="GET", body=None):
+        headers = {"X-API-Key": self.api_key}
+        data = None
+        if body is not None:
+            headers["Content-Type"] = "application/json"
+            data = json.dumps(body).encode("utf-8")
+        req = urllib.request.Request(f"http://127.0.0.1:{self.gui_port}{path}",
+                                     data=data, headers=headers, method=method)
         with urllib.request.urlopen(req, timeout=3) as r:
-            return json.load(r)
+            raw = r.read()
+            return json.loads(raw) if raw else {}

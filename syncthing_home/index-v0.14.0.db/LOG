@@ -1,43 +1,17 @@
-=============== Nov 2, 2026 (CST) ===============
-20:51:43.509172 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
-20:51:43.514387 db@open opening
-20:51:43.515451 version@stat F·[] S·0B[] Sc·[]
-20:51:43.517401 db@janitor F·2 G·0
-20:51:43.517401 db@open done T·3.014ms
-20:51:43.976276 memdb@flush N·18 S·582B
-20:51:43.978834 memdb@flush created L0@3 N·18 S·301B "\ndb..ion,v18":"\ndb..ion,v1"
-20:51:43.978834 version@stat F·[1] S·301B[301B] Sc·[0.25]
-20:51:43.979904 memdb@flush committed F·1 T·3.6277ms
-20:51:43.983020 journal@remove removed @1
-20:51:43.983020 table@compaction range L-1 "":""
-20:51:43.983020 table@compaction L0·1 -> L1·0 S·301B Q·18
-20:51:43.991090 table@build created L1@4 N·3 S·173B "\ndb..ion,v18":"\ndb..ion,v16"
-20:51:43.991090 version@stat F·[0 1] S·173B[0B 173B] Sc·[0.00 0.00]
-20:51:43.992087 table@compaction committed F~ S-128B Ke·0 D·15 T·9.0666ms
-20:51:43.992087 table@remove removed @3
-=============== Nov 2, 2026 (CST) ===============
-20:57:54.611844 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
-20:57:54.612348 version@stat F·[0 1] S·173B[0B 173B] Sc·[0.00 0.00]
-20:57:54.612416 db@open opening
-20:57:54.612416 journal@recovery F·1
-20:57:54.612416 journal@recovery recovering @2
-20:57:54.614913 memdb@flush created L0@5 N·138 S·5KiB "\x00\x00\x00..jpg,v46":"\x0e\x00\x00..jpg,v60"
-20:57:54.614913 version@stat F·[1 1] S·6KiB[5KiB 173B] Sc·[0.25 0.00]
-20:57:54.617904 db@janitor F·4 G·0
-20:57:54.617904 db@open done T·5.4876ms
-=============== Nov 3, 2026 (CST) ===============
-16:17:36.618499 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
-16:17:36.628654 version@stat F·[1 1] S·6KiB[5KiB 173B] Sc·[0.25 0.00]
-16:17:36.628654 db@open opening
-16:17:36.628654 journal@recovery F·1
-16:17:36.629411 journal@recovery recovering @6
-16:17:36.644880 memdb@flush created L0@8 N·209 S·8KiB "\x00\x00\x00..xml,v162":"\x0e\x00\x00..jpg,d166"
-16:17:36.645411 version@stat F·[2 1] S·14KiB[14KiB 173B] Sc·[0.50 0.00]
-16:17:36.651598 db@janitor F·5 G·0
-16:17:36.652143 db@open done T·23.4888ms
-16:18:21.891415 table@compaction L0·2 -> L1·1 S·14KiB Q·368
-16:18:21.903211 table@build created L1@11 N·146 S·6KiB "\x00\x00\x00..jpg,v46":"\x0e\x00\x00..jpg,v296"
-16:18:21.903211 version@stat F·[0 1] S·6KiB[0B 6KiB] Sc·[0.00 0.00]
-16:18:21.904314 table@compaction committed F-2 S-7KiB Ke·0 D·204 T·12.8994ms
-16:18:21.904912 table@remove removed @5
-16:18:21.905435 table@remove removed @4
+=============== Nov 5, 2026 (CST) ===============
+20:23:16.097786 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+20:23:16.101403 db@open opening
+20:23:16.102470 version@stat F·[] S·0B[] Sc·[]
+20:23:16.104115 db@janitor F·2 G·0
+20:23:16.104115 db@open done T·2.7121ms
+20:23:16.569107 memdb@flush N·18 S·582B
+20:23:16.574001 memdb@flush created L0@3 N·18 S·301B "\ndb..ion,v18":"\ndb..ion,v1"
+20:23:16.574001 version@stat F·[1] S·301B[301B] Sc·[0.25]
+20:23:16.575040 memdb@flush committed F·1 T·5.9325ms
+20:23:16.580229 journal@remove removed @1
+20:23:16.580229 table@compaction range L-1 "":""
+20:23:16.580229 table@compaction L0·1 -> L1·0 S·301B Q·18
+20:23:16.586210 table@build created L1@4 N·3 S·173B "\ndb..ion,v18":"\ndb..ion,v16"
+20:23:16.586210 version@stat F·[0 1] S·173B[0B 173B] Sc·[0.00 0.00]
+20:23:16.587207 table@compaction committed F~ S-128B Ke·0 D·15 T·6.9773ms
+20:23:16.587207 table@remove removed @3
